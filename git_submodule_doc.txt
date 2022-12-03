@@ -32,7 +32,11 @@ git submodule update --remote
 git submodule update --remote social_messanger
 git submodule update --remote social_user_auth
 git submodule update --init --remote social_messanger
+
+# If you want to update all your submodules following a branch
 git submodule update --recursive --remote
+git submodule foreach -q --recursive 'branch="$(git config -f $toplevel/.gitmodules submodule.$name.branch)"; git switch $branch'
+
 
 
 # main branch checkout
