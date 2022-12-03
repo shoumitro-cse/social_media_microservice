@@ -14,6 +14,7 @@ cd social_media_microservice
 # git submodule add git@github.com:shoumitro-cse/social_messanger.git
 git submodule add -b main  git@github.com:shoumitro-cse/social_user_auth.git
 git submodule add -b main  git@github.com:shoumitro-cse/social_messanger.git
+git submodule add -b main  git@github.com:shoumitro-cse/social_notification.git
 
 # remove submodule
  git submodule rm module_name

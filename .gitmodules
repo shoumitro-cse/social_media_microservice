@@ -6,3 +6,7 @@
 	path = social_messanger
 	url = git@github.com:shoumitro-cse/social_messanger.git
 	branch = main
+[submodule "social_notification"]
+	path = social_notification
+	url = git@github.com:shoumitro-cse/social_notification.git
+	branch = main
