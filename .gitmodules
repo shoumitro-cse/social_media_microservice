@@ -1,8 +1,8 @@
 [submodule "social_user_auth"]
 	path = social_user_auth
 	url = git@github.com:shoumitro-cse/social_user_auth.git
-	branch=main
+	branch = main
 [submodule "social_messanger"]
 	path = social_messanger
 	url = git@github.com:shoumitro-cse/social_messanger.git
-	branch=main
+	branch = main
