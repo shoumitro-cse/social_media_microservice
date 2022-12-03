@@ -1,0 +1,57 @@
+https://git-scm.com/book/en/v2/Git-Tools-Submodules
+
+
+# git clone with submodule
+git clone --recurse-submodules git@github.com:shoumitro-cse/social_media_microservice.git
+
+
+# add submodule with branch
+git submodule add -b <branch> <repository> [<path>]
+git submodule add -b main  git@github.com:shoumitro-cse/social_user_auth.git
+
+cd social_media_microservice
+# git submodule add git@github.com:shoumitro-cse/social_user_auth.git
+# git submodule add git@github.com:shoumitro-cse/social_messanger.git
+git submodule add -b main  git@github.com:shoumitro-cse/social_user_auth.git
+git submodule add -b main  git@github.com:shoumitro-cse/social_messanger.git
+
+# remove submodule
+ git submodule rm module_name
+ git rm --cached social_user_auth
+ git rm --cached social_messanger
+ git submodule rm social_messanger
+
+# submodule pull, push, checkout, and track lastest update code
+git submodule foreach --recursive git checkout main
+git submodule foreach --recursive git pull origin main
+git submodule foreach --recursive git push origin main
+git submodule update --remote
+
+# git submodule tracking latest commit or branch, I added branch=main to the submodule definition in .gitmodules.
+git submodule update --remote
+git submodule update --remote social_messanger
+git submodule update --remote social_user_auth
+git submodule update --init --remote social_messanger
+git submodule update --recursive --remote
+
+
+# main branch checkout
+git checkout --recurse-submodules main
+
+
+# pull
+git pull --recurse-submodules
+git pull origin main --recurse-submodules
+git pull origin main --recurse
+git pull --recurse
+
+
+
+# push
+git push --recurse-submodules=check
+#git push --recurse-submodules=on-demand
+git push origin main --recurse-submodules=check
+
+
+
+
