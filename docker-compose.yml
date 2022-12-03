@@ -1,0 +1,42 @@
+version: '3.8'
+
+
+services:
+
+  user_auth_backend:
+    container_name: user_auth_backend
+    build:
+      context: ./user_auth
+      dockerfile: Dockerfile
+    command: bash -c "chmod +x ./startup.sh && ./startup.sh"
+    #command: bash -c " cp env_docker.example .env && 
+    #                   python manage.py makemigrations &&
+    #                   python manage.py migrate &&
+    #                   python manage.py collectstatic --no-input &&
+    #                   gunicorn user_auth.wsgi -b 0.0.0.0:8080"
+    ports:
+      - 8001:8080
+    volumes:
+      - ./user_auth:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - user_auth_pg_db
+
+  user_auth_pg_db:
+    container_name: user_auth_pg_db
+    image: postgis/postgis:13-3.1-alpine
+    restart: unless-stopped
+    volumes:
+      - user_auth_pg_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=user_auth
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=user_auth1234
+      - PGDATA:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
+
+volumes:
+  user_auth_pg_data:
+    driver: local

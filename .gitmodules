@@ -1,0 +1,3 @@
+[submodule "social_user_auth"]
+	path = social_user_auth
+	url = git@github.com:shoumitro-cse/social_user_auth.git
