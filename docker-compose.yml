@@ -36,7 +36,74 @@ services:
       - PGDATA:/var/lib/postgresql/data
     ports:
       - '5433:5432'
+      
+  social_messanger_backend:
+    container_name: social_messanger
+    build:
+      context: ./social_messanger
+      dockerfile: Dockerfile
+    command: bash -c "chmod +x ./startup.sh && ./startup.sh"
+    ports:
+      - 8002:8080
+    volumes:
+      - ./social_messanger:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - social_messanger_pg_db
 
+  social_messanger_pg_db:
+    container_name: social_messanger_pg_db
+    image: postgis/postgis:13-3.1-alpine
+    restart: unless-stopped
+    volumes:
+      - social_messanger_pg_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=messanger_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=messanger1234
+      - PGDATA:/var/lib/postgresql/data
+    ports:
+      - '5434:5432'
+      
+  social_notification_backend:
+    container_name: social_notification
+    build:
+      context: ./social_notification
+      dockerfile: Dockerfile
+    command: bash -c "chmod +x ./startup.sh && ./startup.sh"
+    ports:
+      - 8003:8080
+    volumes:
+      - ./social_notification:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - social_notification_pg_db
+
+  social_notification_pg_db:
+    container_name: social_notification_pg_db
+    image: postgis/postgis:13-3.1-alpine
+    restart: unless-stopped
+    volumes:
+      - social_notification_pg_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=notification_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=notification1234
+      - PGDATA:/var/lib/postgresql/data
+    ports:
+      - '5435:5432'
+      
 volumes:
   social_user_auth_pg_data:
     driver: local
+
+  social_messanger_pg_data:
+    driver: local
+
+  social_notification_pg_data:
+    driver: local
+    
+    
+    
