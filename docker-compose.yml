@@ -3,10 +3,10 @@ version: '3.8'
 
 services:
 
-  user_auth_backend:
-    container_name: user_auth_backend
+  social_user_auth_backend:
+    container_name: social_social_user_auth
     build:
-      context: ./user_auth
+      context: ./social_user_auth
       dockerfile: Dockerfile
     command: bash -c "chmod +x ./startup.sh && ./startup.sh"
     #command: bash -c " cp env_docker.example .env && 
@@ -17,18 +17,18 @@ services:
     ports:
       - 8001:8080
     volumes:
-      - ./user_auth:/app
+      - ./social_user_auth:/app
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
-      - user_auth_pg_db
+      - social_user_auth_pg_db
 
-  user_auth_pg_db:
-    container_name: user_auth_pg_db
+  social_user_auth_pg_db:
+    container_name: social_user_auth_pg_db
     image: postgis/postgis:13-3.1-alpine
     restart: unless-stopped
     volumes:
-      - user_auth_pg_data:/var/lib/postgresql/data
+      - social_user_auth_pg_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=user_auth
       - POSTGRES_USER=postgres
@@ -38,5 +38,5 @@ services:
       - '5433:5432'
 
 volumes:
-  user_auth_pg_data:
+  social_user_auth_pg_data:
     driver: local
